@@ -1,0 +1,361 @@
+@font-face{font-family:"nt-Pretendard";src:url("PretendardVariable.woff2") format("woff2");font-weight:45 920;font-style:normal;font-display:swap;}
+/* ── 회사소개 본문 (enticket_about/css/about.css 와 동일) ── */
+/* ══════════════════════════════════════════════════════════════
+   엔티켓 회사소개 — 문화인 전달용 스코프 CSS (v3 · 예스24 기업사이트 스타일)
+   참조: company.yes24.com/yes24 의 타이포 스케일(영문 대제목 80px / 한글 핵심문장 44~54px / 본문 22px)을
+   966px 폭에 맞춰 약 0.6배로 환산함. 단색 브랜드 면 히어로, 흰 바탕, 큰 여백, 괘선 최소.
+   셸(common.css/setup.css)이 body,p,h1~h4 에 돋움 12px·#9b9b9b 를 전역 지정하므로 .nt-about 하위에서 전부 덮어씀.
+   690px(좌측 컬럼 있음)·966px(전폭) 양쪽 대응.
+   ══════════════════════════════════════════════════════════════ */
+
+.nt-about {
+  /* 서체: Pretendard(jsDelivr). 나눔스퀘어는 13~15px 에서 글자 높이가 들쭉날쭉해 헤더·푸터·본문 소자에 부적합함 */
+  --purple: #602b89;
+  --ink:    #101010;
+  --ink-2:  #333333;
+  --ink-3:  #8a8a8a;
+  --line:   #dddddd;
+  --font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "맑은 고딕", sans-serif;
+
+  font-family: var(--font);
+  font-size: 16px; line-height: 1.75; font-weight: 400;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; font-feature-settings: 'ss05';
+  color: var(--ink);
+  word-break: keep-all;
+  text-align: left;
+  background: #fff;
+  padding: 0 0 200px;
+}
+.nt-about *, .nt-about *::before, .nt-about *::after { box-sizing: border-box; }
+.nt-about h1, .nt-about h2, .nt-about h3, .nt-about h4, .nt-about p, .nt-about ul, .nt-about ol, .nt-about li, .nt-about dl, .nt-about dt, .nt-about dd, .nt-about strong, .nt-about em, .nt-about i {
+  margin: 0; padding: 0; font-family: inherit; color: inherit; font-weight: inherit; font-size: inherit; line-height: inherit; font-style: normal;
+}
+.nt-about ul, .nt-about ol { list-style: none; }
+.nt-about a { color: inherit; text-decoration: none; }
+.nt-about a:focus-visible { outline: 2px solid var(--purple); outline-offset: 4px; }
+.nt-about img { display: block; max-width: 100%; }
+
+/* ── 타이포 스케일 (예스24 80/44/22 → 48/28/16) ───────────── */
+.nt-about .nt-h2 { font-size: 48px; font-weight: 700; line-height: 1; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 56px; }
+.nt-about .nt-h3 { font-size: 28px; font-weight: 700; line-height: 1.4; letter-spacing: -0.02em; color: var(--ink); }
+.nt-about .nt-h4 { font-size: 26px; font-weight: 700; line-height: 1.35; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 14px; }
+.nt-about .nt-body p { font-size: 16px; line-height: 1.9; color: var(--ink-2); }
+.nt-about .nt-body p + p { margin-top: 18px; }
+.nt-about .nt-body .nt-lead { font-size: 18px; line-height: 1.7; color: var(--ink); font-weight: 700; }
+
+/* ── 스크롤 연출 ─────────────────────────────────────────── */
+/* 리빌: 화면에 들어올 때 60px 아래서 떠오름 */
+.nt-about .nt-reveal { opacity: 0; transform: translate3d(0, 40px, 0); transition: opacity .8s cubic-bezier(.16,.7,.2,1), transform .8s cubic-bezier(.16,.7,.2,1); will-change: opacity, transform; }
+.nt-about .nt-reveal.is-in { opacity: 1; transform: none; }
+.nt-about .nt-year.nt-reveal, .nt-about .nt-brands__list > li.nt-reveal { transform: translateY(32px); }
+.nt-about .nt-brands__list > li:nth-child(2).nt-reveal { transition-delay: .08s; }
+.nt-about .nt-brands__list > li:nth-child(3).nt-reveal { transition-delay: .16s; }
+/* 히어로 핀 + 커튼: 히어로는 JS가 translateY 로 고정, 이후 콘텐츠가 흰 바탕으로 위를 덮음 */
+.nt-about .nt-brand { position: relative; z-index: 0; will-change: opacity; }
+.nt-about.has-sticky .nt-brand { position: -webkit-sticky; position: sticky; top: 0; }
+.nt-about .nt-after { position: relative; z-index: 1; background: #fff; }
+/* WHAT WE DO 핀: 섹션은 길고(JS가 높이 설정), 패널만 화면에 머무름. 항목 3개는 같은 자리에서 순차 전환 */
+.nt-about .nt-do { position: relative; }
+.nt-about .nt-do__panel { backface-visibility: hidden; }
+.nt-about.has-sticky .nt-do__panel { position: -webkit-sticky; position: sticky; top: 0; }
+.nt-about.no-sticky .nt-do__panel { will-change: transform; }
+.nt-about .nt-do__idx { font-size: 18px; font-weight: 700; color: var(--ink-3); letter-spacing: 0.04em; margin-left: 20px; vertical-align: 12px; }
+.nt-about .nt-do__idx b { color: var(--purple); }
+.nt-about .nt-do__list { position: relative; min-height: 360px; border-top: 1px solid var(--ink); }
+.nt-about .nt-do__list > li.nt-do__item { position: absolute; left: 0; right: 0; top: 0; border: 0; padding: 40px 0 0; opacity: 0; transform: translate3d(0, 24px, 0); pointer-events: none; visibility: hidden;
+  transition: opacity .18s ease-out, transform 0s linear .18s, visibility 0s linear .18s; }
+.nt-about .nt-do__list > li.nt-do__item.is-prev { opacity: 0; transform: translate3d(0, -12px, 0); }
+.nt-about .nt-do__list > li.nt-do__item.is-active { opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition: opacity .55s cubic-bezier(.16,.7,.2,1) .2s, transform .55s cubic-bezier(.16,.7,.2,1) .2s, visibility 0s linear 0s; }
+.nt-about .nt-do__list > li.nt-do__item.is-static { position: relative; opacity: 1; transform: none; pointer-events: auto; border-top: 1px solid var(--line); }
+.nt-about .nt-do__list > li { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.nt-about .nt-do__en { font-size: 18px; font-weight: 900; color: var(--purple); letter-spacing: 0.02em; line-height: 1.4; }
+.nt-about .nt-do__body p { font-size: 16px; line-height: 1.9; color: var(--ink-2); }
+.nt-about .nt-dots { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.nt-about .nt-dots li { font-size: 14px; color: var(--ink-2); position: relative; padding-left: 12px; }
+.nt-about .nt-dots li::before { content: ''; position: absolute; left: 0; top: 11px; width: 4px; height: 4px; border-radius: 50%; background: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .nt-about .nt-reveal { opacity: 1; transform: none; transition: none; } .nt-about .nt-do__list > li.nt-do__item { position: relative; opacity: 1; transform: none; } }
+
+/* 섹션 공통 여백 */
+.nt-about .nt-sec { padding: 200px 0 0; }
+.nt-about .nt-cols { display: grid; grid-template-columns: 1fr; gap: 28px; }
+
+/* ── 1. 브랜드 히어로 ─────────────────────────────────────── */
+.nt-about .nt-brand {
+  background: #fff;
+  border-bottom: 1px solid var(--ink);
+  min-height: 480px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px;
+  padding: 56px 32px;
+}
+.nt-about .nt-brand__tag { font-size: 22px; font-weight: 700; color: var(--purple); letter-spacing: -0.015em; }
+.nt-about .nt-brand__logo { width: 300px; height: auto; }
+
+/* ── 3. 지표 ─────────────────────────────────────────────── */
+.nt-about .nt-stats { padding-top: 160px; }
+.nt-about .nt-stats ul { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); }
+.nt-about .nt-stats li { padding: 28px 0 0; }
+.nt-about .nt-stats strong { display: block; font-size: 44px; font-weight: 700; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.nt-about .nt-count { font-variant-numeric: tabular-nums; } /* 카운트 중 자릿수 흔들림 방지 */
+.nt-about .nt-stats small { font-size: 16px; font-weight: 700; margin-left: 4px; color: var(--ink-2); }
+.nt-about .nt-stats li > span { display: block; margin-top: 12px; font-size: 14px; font-weight: 700; color: var(--ink-3); }
+
+/* ── 사진 슬롯 공통: 이미지 없으면(is-empty) 연회색 면 + 안내문 ── */
+.nt-about .nt-photo { position: relative; margin: 0; overflow: hidden; background: #f2f2f3; }
+.nt-about .nt-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.08); transition: transform 1.4s cubic-bezier(.16,.7,.2,1); will-change: transform; }
+.nt-about .nt-reveal.is-in .nt-photo img, .nt-about .nt-do__item.is-active .nt-photo img { transform: scale(1); }
+.nt-about .nt-photo.is-empty img { display: none; }
+.nt-about .nt-photo.is-empty::before { content: '사진 자리 · ' attr(data-note); position: absolute; left: 50%; top: 24px; transform: translateX(-50%); font-size: 13px; color: #9a9a9a; white-space: nowrap; letter-spacing: -0.01em; }
+/* 3.5 VISION·MISSION 씬 — 예스24 missionVision 이식 (섹션은 길고, 무대는 sticky 100vh) */
+.nt-about .nt-scene { position: relative; margin-top: 200px; }
+.nt-about .nt-scene__stage { position: relative; overflow: hidden; background: #fff; }
+.nt-about.has-sticky .nt-scene__stage { position: -webkit-sticky; position: sticky; top: 0; } /* 독립 페이지: JS가 화면 전폭(스크롤바 제외)으로 폭·오프셋 계산 */
+.nt-about.no-sticky .nt-scene__stage { height: auto !important; } /* 셸(overflow hidden): 정적 폴백 */
+.nt-about .nt-scene__pic { position: absolute; inset: 0; margin: 0; will-change: transform, opacity; transform-origin: 50% 50%; }
+.nt-about .nt-scene__pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.nt-about .nt-scene__pic.is-empty { background: #ececee; }
+.nt-about .nt-scene__pic.is-empty img { display: none; }
+.nt-about .nt-scene__pic::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.55) 100%); }
+.nt-about .nt-scene__mask { position: absolute; inset: 0; background: #fff; z-index: 3; pointer-events: none; will-change: clip-path, opacity; }
+.nt-about .nt-scene__msg { position: absolute; left: 0; right: 0; bottom: 12%; z-index: 4; padding: 0 max(48px, calc(50vw - 483px)); color: #fff; opacity: 0; will-change: transform, opacity; text-shadow: 0 2px 24px rgba(0,0,0,.35); }
+.nt-about .nt-scene__en { font-size: 18px; font-weight: 800; letter-spacing: 0.14em; margin-bottom: 18px; opacity: .92; }
+.nt-about .nt-scene__ko { font-size: 40px; font-weight: 700; line-height: 1.35; letter-spacing: -0.03em; }
+/* 정적 폴백(감속 선호·sticky 불가): 두 장면을 세로로 나열 */
+.nt-about .nt-scene.is-static .nt-scene__stage, .nt-about.no-sticky .nt-scene__stage { height: auto; }
+.nt-about .nt-scene.is-static .nt-scene__pic, .nt-about.no-sticky .nt-scene__pic { position: relative; aspect-ratio: 16 / 9; opacity: 1 !important; transform: none !important; }
+.nt-about .nt-scene.is-static .nt-scene__mask, .nt-about.no-sticky .nt-scene__mask { display: none; }
+.nt-about .nt-scene.is-static .nt-scene__msg, .nt-about.no-sticky .nt-scene__msg { opacity: 1 !important; transform: none !important; }
+.nt-about.no-sticky .nt-scene__msg--a, .nt-about .nt-scene.is-static .nt-scene__msg--a { position: absolute; top: 0; bottom: auto; padding-top: 12%; }
+
+/* ── 4.5 SCENES — 예스24 CORE VALUE 사진 배치(좌·우 float, 크기·높이 어긋남), 문구 없음 ──
+   원본 1360px 기준: 664×800 좌 / 548×548 우 mt120 / 432×432 좌 mt208 / 780×780 우 → 966px 기준 0.71배 */
+.nt-about .nt-cv { position: relative; padding-bottom: 1px; }
+.nt-about .nt-cv::after { content: ''; display: block; clear: both; }
+.nt-about .nt-cv__item { list-style: none; position: relative; transform-origin: 50% 50%; will-change: transform; }
+/* 모여 있을 때 겹침 순서: 작은 사진이 위로 */
+.nt-about .nt-cv__item--1 { z-index: 3; } .nt-about .nt-cv__item--2 { z-index: 2; } .nt-about .nt-cv__item--3 { z-index: 4; } .nt-about .nt-cv__item--4 { z-index: 1; }
+.nt-about .nt-cv__item .nt-cv__pic { box-shadow: 0 24px 60px rgba(16, 16, 16, 0.18); transition: box-shadow .6s ease; }
+.nt-about .nt-cv.is-open .nt-cv__item .nt-cv__pic { box-shadow: 0 0 0 rgba(16, 16, 16, 0); }
+.nt-about .nt-cv__item--1 { float: left; width: 472px; }
+.nt-about .nt-cv__item--2 { float: right; width: 390px; margin-top: 120px; }
+.nt-about .nt-cv__item--3 { float: left; width: 307px; margin-top: 148px; clear: left; }
+.nt-about .nt-cv__item--4 { float: right; width: 554px; margin-top: 40px; }
+.nt-about .nt-cv__fig { margin: 0; }
+.nt-about .nt-cv__pic { display: block; position: relative; overflow: hidden; background: #f2f2f3; }
+.nt-about .nt-cv__item--1 .nt-cv__pic { height: 568px; }
+.nt-about .nt-cv__item--2 .nt-cv__pic { height: 390px; }
+.nt-about .nt-cv__item--3 .nt-cv__pic { height: 307px; }
+.nt-about .nt-cv__item--4 .nt-cv__pic { height: 554px; }
+.nt-about .nt-cv__pic img { width: 100%; height: 118%; object-fit: cover; display: block; will-change: transform; } /* 118%: 패럴랙스 여유분 */
+.nt-about .nt-cv__pic.is-empty img { display: none; }
+.nt-about .nt-cv__pic.is-empty::before { content: '사진 자리 · ' attr(data-note); position: absolute; left: 50%; top: 24px; transform: translateX(-50%); font-size: 13px; color: #9a9a9a; white-space: nowrap; }
+.nt-about .nt-cv__en { color: var(--purple); font-size: 18px; font-weight: 900; letter-spacing: 0.02em; line-height: 1.5; margin: 40px 0 12px; }
+.nt-about .nt-cv__ko { font-size: 30px; font-weight: 700; line-height: 1.35; letter-spacing: -0.03em; color: var(--ink); }
+.nt-about .nt-cv__body { margin-top: 18px; font-size: 15px; line-height: 1.85; color: var(--ink-2); }
+.nt-about .nt-link { display: inline-block; margin-top: 22px; font-size: 15px; font-weight: 700; color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+.nt-about .nt-link::after { content: ' →'; }
+.nt-about .nt-link:hover { color: var(--purple); border-color: var(--purple); }
+.nt-about .nt-cv .nt-link { margin-top: 18px; }
+
+/* ── 5. BRAND 목록 ───────────────────────────────────────── */
+.nt-about .nt-brands__list { border-top: 1px solid var(--ink); }
+.nt-about .nt-brands__list li { border-bottom: 1px solid var(--line); }
+.nt-about .nt-brands__list a { display: grid; grid-template-columns: 180px 1fr auto; align-items: center; gap: 20px; padding: 34px 0; transition: padding-left .18s ease; }
+.nt-about .nt-brands__list a:hover { padding-left: 10px; }
+.nt-about .nt-brands__list strong { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; }
+.nt-about .nt-brands__list span { font-size: 16px; color: var(--ink-2); }
+.nt-about .nt-brands__list span i { font-size: 11px; font-weight: 700; color: var(--ink-3); border: 1px solid var(--line); padding: 1px 6px; margin-left: 8px; vertical-align: 2px; }
+.nt-about .nt-brands__list em { font-size: 26px; color: var(--ink); }
+.nt-about .nt-brands__list a:hover strong, .nt-about .nt-brands__list a:hover em { color: var(--purple); }
+
+/* ── 6. HISTORY — 예스24 /yes24/History CSS 값 그대로 (색만 보라, 폭만 966px 환산) ──
+   원본: .history{display:flex} .tabmenu{position:absolute} .tabmenu a{44px/700/60px}
+         .tabCont{width:896px;margin-left:auto}
+         h4{float:left;width:260px;padding-left:56px;44px/700/60px;position:relative} h4::before{16px 원, left:0, top:50%}
+         h4:not(:first-of-type), +dl{margin-top:40px}
+         dl{float:left;width:calc(100% - 260px);padding:10px 0;line-height:34px;position:relative}
+         dl:not(:last-of-type)::before{1px #ddd 세로선, left:-253px, top:22px, height:calc(100% + 40px)}
+         dt{float:left;clear:both;30px;margin-bottom:30px} dd{22px;padding-left:65px;margin-bottom:30px}
+   966px 환산: 라벨 컬럼 240px, tabCont 726px, h4 220px(점 위치 동일), 세로선 left -213px */
+.nt-about .nt-history { padding-top: 260px; }
+.nt-about .history { display: grid; grid-template-columns: 210px minmax(0, 1fr); column-gap: 16px; position: relative; padding: 0 0 60px; }
+.nt-about .history .tabmenu { position: static; } /* 예스24는 absolute+fixObj(스크롤 고정)이지만 여기선 그리드 컬럼에 제자리 유지 */
+.nt-about .history .tabmenu > li h3 { font-size: 30px; font-weight: 700; line-height: 60px; letter-spacing: -0.54px; white-space: nowrap; }
+.nt-about .history .tabmenu.st01 > li a { color: #cccccc; font-size: 30px; font-weight: 700; line-height: 60px; }
+.nt-about .history .tabmenu.st01 > li.on a { color: var(--purple); }
+.nt-about .history .tabCont { width: auto; min-width: 0; }
+.nt-about .history .tabCont::after { content: ''; display: block; clear: both; }
+.nt-about .history .tabCont h4 { clear: both; color: #101010; float: left; font-size: 44px; font-weight: 700; letter-spacing: 0; line-height: 60px; padding-left: 56px; position: relative; width: 190px; z-index: 10; }
+.nt-about .history .tabCont h4::before { background: var(--purple); border-radius: 50%; content: ""; display: block; height: 16px; left: 0; position: absolute; top: 50%; transform: translateY(-50%); width: 16px; }
+.nt-about .history .tabCont h4:not(:first-of-type), .nt-about .history .tabCont h4:not(:first-of-type) + dl { margin-top: 40px; }
+.nt-about .history .tabCont dl { float: left; height: auto; letter-spacing: 0; line-height: 34px; padding: 10px 0; position: relative; width: calc(100% - 190px); }
+.nt-about .history .tabCont dl:not(:last-of-type)::before { background: #dddddd; content: ""; display: block; height: calc(100% + 40px); left: -183px; position: absolute; top: 22px; width: 1px; }
+.nt-about .history .tabCont dl dt { clear: both; float: left; font-size: 30px; font-weight: 400; color: #333333; margin-bottom: 30px; line-height: 34px; }
+.nt-about .history .tabCont dl dd { font-size: 22px; font-weight: 400; color: #333333; padding-left: 65px; margin-bottom: 30px; line-height: 34px; white-space: normal; word-break: keep-all; overflow-wrap: break-word; }
+.nt-about .history .tabCont dl dd:last-child { margin-bottom: 0; }
+.nt-about .history .tabCont dl dd.no-month { padding-left: 65px; } /* 월 없는 항목도 같은 들여쓰기 */
+.nt-about .history .tabCont dl dt:last-of-type + dd:last-child { margin-bottom: 0; }
+
+/* ── 7. CONTACT ──────────────────────────────────────────── */
+.nt-about .nt-contact__list { display: grid; grid-template-columns: 1fr; gap: 28px; border-top: 1px solid var(--ink); padding-top: 32px; }
+.nt-about .nt-contact__list dt { font-size: 13px; font-weight: 700; color: var(--ink-3); letter-spacing: 0.06em; margin-bottom: 8px; }
+.nt-about .nt-contact__list dd { font-size: 18px; font-weight: 700; line-height: 1.5; }
+.nt-about .nt-contact__list dd strong { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; display: block; }
+.nt-about .nt-contact__list dd span { display: block; font-size: 14px; font-weight: 400; color: var(--ink-3); margin-top: 4px; }
+.nt-about #naverMap { width: 100%; height: 320px; margin-top: 40px; background: #f4f4f6; }
+.nt-about #naverMap[hidden] { display: none; }
+
+/* ── 전폭 966px ──────────────────────────────────────────── */
+@media (min-width: 900px) {
+  .nt-about .nt-h2 { font-size: 56px; margin-bottom: 64px; }
+  .nt-about .nt-h3 { font-size: 32px; }
+  .nt-about .nt-sec { padding-top: 260px; }
+  .nt-about .nt-stats { padding-top: 200px; }
+  .nt-about .nt-brand { min-height: 480px; }
+  .nt-about .nt-brand__logo { width: 360px; }
+  .nt-about .nt-cols { grid-template-columns: 1fr 1fr; gap: 64px; }
+  .nt-about .nt-stats strong { font-size: 48px; }
+    .nt-about .nt-scene__ko { font-size: 52px; }
+  .nt-about .nt-do__list > li, .nt-about .nt-do__list > li.nt-do__item { grid-template-columns: 180px 1fr; gap: 32px; padding: 48px 0 0; align-items: start; }
+  .nt-about .nt-do__en { font-size: 20px; padding-top: 6px; }
+  .nt-about .nt-h4 { font-size: 30px; }
+  .nt-about .nt-contact__list { grid-template-columns: 1fr 1fr 1.6fr; }
+}
+
+/* 690px 셸(좌측 컬럼 있음)에서는 라벨을 위로 올리고 tabCont 전폭 */
+@media (max-width: 899px) {
+  .nt-about .history { grid-template-columns: 1fr; row-gap: 16px; }
+  .nt-about .history .tabmenu { margin-bottom: 8px; }
+  .nt-about .history .tabCont { width: 100%; }
+  .nt-about .history .tabCont h4 { width: 170px; font-size: 36px; padding-left: 40px; }
+  .nt-about .history .tabCont dl { width: calc(100% - 170px); }
+  .nt-about .history .tabCont dl:not(:last-of-type)::before { left: -163px; }
+  .nt-about .history .tabCont dl dt { font-size: 24px; }
+  .nt-about .history .tabCont dl dd { font-size: 18px; padding-left: 52px; margin-bottom: 20px; }
+}
+
+/* 협폭: CORE VALUE 세로 배치 */
+@media (max-width: 899px) {
+  .nt-about .nt-cv__item--1, .nt-about .nt-cv__item--2, .nt-about .nt-cv__item--3, .nt-about .nt-cv__item--4 { float: none; width: 100%; margin-top: 64px; clear: both; }
+  .nt-about .nt-cv__item--1 { margin-top: 0; }
+  .nt-about .nt-cv__item--1 .nt-cv__pic, .nt-about .nt-cv__item--2 .nt-cv__pic, .nt-about .nt-cv__item--3 .nt-cv__pic, .nt-about .nt-cv__item--4 .nt-cv__pic { height: auto; aspect-ratio: 4 / 3; }
+}
+
+/* ── 협폭 ────────────────────────────────────────────────── */
+@media (max-width: 560px) {
+  .nt-about .nt-h2 { font-size: 36px; }
+  .nt-about .nt-stats ul { grid-template-columns: 1fr 1fr; row-gap: 24px; }
+  .nt-about .nt-brands__list a { grid-template-columns: 1fr auto; }
+  .nt-about .nt-brands__list span { grid-column: 1; }
+  .nt-about .nt-brands__list em { grid-row: 1 / span 2; }
+}
+
+
+/* 2026-09-16 A-1 검토안: 최신 사용자 문안 유지, 문화인 690px 내 배치 보정.
+   All changes are scoped. No host shell selectors or viewport-wide animation. */
+.nt-about.nt-about--embedded { box-sizing:border-box; width:100%; max-width:690px; padding:0 28px 80px; margin:0; overflow-wrap:anywhere; }
+.nt-about--embedded .nt-sec { padding-top:96px; }
+.nt-about--embedded .nt-h2 {font-size:42px;line-height:1.12;margin-bottom:36px;letter-spacing:-.035em;}
+.nt-about--embedded .nt-h3 {font-size:28px;}
+.nt-about--embedded .nt-h4 {font-size:24px;}
+.nt-about--embedded .nt-cols {grid-template-columns:minmax(0,1fr);gap:24px;}
+.nt-about--embedded .nt-brand {position:relative;min-height:320px;padding:48px 16px;gap:20px;}
+.nt-about--embedded .nt-brand__logo {width:270px;max-width:90%;}
+.nt-about--embedded .nt-brand__tag {font-size:20px;text-align:center;}
+.nt-about--embedded .nt-stats {padding-top:56px;}
+.nt-about--embedded .nt-stats ul {grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px;}
+.nt-about--embedded .nt-stats li {padding-top:24px;}
+.nt-about--embedded .nt-stats strong {font-size:38px;}
+.nt-about--embedded .nt-stats li>span {color:#62606a;}
+.nt-about--embedded .nt-reveal {opacity:1;transform:none;will-change:auto;transition:none;}
+.nt-about--embedded .nt-scene {margin-top:96px;}
+.nt-about--embedded .nt-scene__stage {position:relative;width:100%;height:auto;overflow:visible;}
+.nt-about--embedded .nt-scene__frame {position:relative;aspect-ratio:16/11;overflow:hidden;margin:0 0 24px;background:#25222c;}
+.nt-about--embedded .nt-scene__pic {position:absolute;inset:0;opacity:1;transform:none;}
+.nt-about--embedded .nt-scene__pic::after {background:linear-gradient(transparent 10%,rgba(0,0,0,.78));}
+.nt-about--embedded .nt-scene__msg {position:absolute;inset:auto 0 28px;padding:0 28px;opacity:1;transform:none;}
+.nt-about--embedded .nt-scene__en {font-size:14px;margin-bottom:12px;}
+.nt-about--embedded .nt-scene__ko {font-size:28px;line-height:1.45;color:white;}
+.nt-about--embedded .nt-do__panel {position:static;transform:none;}
+.nt-about--embedded .nt-do__idx {display:none;}
+.nt-about--embedded .nt-do__list {min-height:0;}
+.nt-about--embedded .nt-do__list>li.nt-do__item {position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:14px;padding:30px 0;border-bottom:1px solid var(--line);opacity:1;transform:none;visibility:visible;pointer-events:auto;transition:none;}
+.nt-about--embedded .nt-do__en {font-size:15px;padding:0;}
+.nt-about--embedded .nt-cv {display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+.nt-about--embedded .nt-cv::after {display:none;}
+.nt-about--embedded .nt-cv .nt-cv__item {float:none;clear:none;width:auto;margin:0;transform:none;}
+.nt-about--embedded .nt-cv .nt-cv__item:nth-child(even) {margin-top:56px;}
+.nt-about--embedded .nt-cv .nt-cv__pic {height:auto;aspect-ratio:4/5;box-shadow:none;}
+.nt-about--embedded .nt-cv__pic img {height:100%;transform:none;}
+.nt-about--embedded .nt-brands__list a {grid-template-columns:124px minmax(0,1fr) 20px;gap:14px;padding:26px 0;}
+.nt-about--embedded .nt-brands__list a:hover {padding-left:0;}
+.nt-about--embedded .nt-brands__list strong {font-size:24px;}
+.nt-about--embedded .nt-brands__list span {font-size:14px;}
+.nt-about--embedded .nt-brands__list a[aria-disabled] {cursor:default;}
+.nt-about--embedded .nt-brands__list a[aria-disabled] em {visibility:hidden;}
+.nt-about--embedded .nt-brands__list span i {display:inline-block;margin:6px 0 0;}
+.nt-about--embedded .history {grid-template-columns:minmax(0,1fr);gap:22px;padding-bottom:0;}
+.nt-about--embedded .history .tabmenu>li h3,.nt-about--embedded .history .tabmenu.st01>li a {font-size:20px;line-height:1.5;}
+.nt-about--embedded .history .tabCont h4 {font-size:34px;line-height:48px;padding-left:28px;width:132px;}
+.nt-about--embedded .history .tabCont h4::before {width:10px;height:10px;}
+.nt-about--embedded .history .tabCont dl {display:grid;grid-template-columns:30px minmax(0,1fr);gap:18px 14px;width:calc(100% - 132px);padding:8px 0;line-height:30px;}
+.nt-about--embedded .history .tabCont dl:not(:last-of-type)::before {left:-127px;top:16px;height:calc(100% + 40px);}
+.nt-about--embedded .history .tabCont dl dt {float:none;clear:none;grid-column:1;font-size:19px;line-height:30px;margin:0;}
+.nt-about--embedded .history .tabCont dl dd {grid-column:2;font-size:17px;line-height:30px;padding:0;margin:0;}
+.nt-about--embedded .history .tabCont dl dd.no-month {grid-column:1 / -1;padding:0;}
+.nt-about--embedded .nt-contact__list {grid-template-columns:1fr;gap:24px;}
+.nt-about--embedded .nt-contact__list dt,.nt-about--embedded .nt-contact__list dd span {color:#62606a;}
+.nt-about--embedded a:focus-visible {outline:2px solid #602b89;outline-offset:5px;}
+@media(max-width:560px){
+ .nt-about.nt-about--embedded{padding:0 20px 64px;}
+ .nt-about--embedded .nt-h2{font-size:32px;}
+ .nt-about--embedded .nt-h3{font-size:24px;}
+ .nt-about--embedded .nt-brand{min-height:270px;}
+ .nt-about--embedded .nt-stats strong{font-size:30px;}
+ .nt-about--embedded .nt-scene__ko{font-size:20px;}
+ .nt-about--embedded .nt-scene__msg{padding:0 18px;bottom:20px;}
+ .nt-about--embedded .nt-brands__list a{grid-template-columns:minmax(0,1fr) 20px;}
+ .nt-about--embedded .nt-brands__list span{grid-column:1;}
+ .nt-about--embedded .nt-brands__list em{grid-column:2;grid-row:1 / span 2;}
+ .nt-about--embedded .history .tabCont h4{float:none;width:auto;font-size:30px;}
+ .nt-about--embedded .history .tabCont dl{float:none;width:100%;padding-left:28px;}
+ .nt-about--embedded .history .tabCont h4:not(:first-of-type)+dl{margin-top:0;}
+ .nt-about--embedded .history .tabCont dl:not(:last-of-type)::before{left:4px;top:0;height:100%;}
+ .nt-about--embedded .history .tabCont dl dd{font-size:15px;line-height:27px;}
+ .nt-about--embedded .nt-cv{gap:14px;}
+}
+@media(prefers-reduced-motion:reduce){.nt-about--embedded *{animation:none!important;transition:none!important;scroll-behavior:auto!important;}}
+@media print{.nt-about--embedded .nt-sec{padding-top:40px;}.nt-about--embedded .nt-scene__frame{break-inside:avoid;}}
+
+.nt-about.nt-about--embedded{--font:"nt-Pretendard","Pretendard Variable",Pretendard,"Malgun Gothic",sans-serif;}
+
+/* 9/14 representative-authored reference: optional additive presentation layer. Load after about.css. */
+.nt-about.nt-reference .nt-brand{align-items:flex-start;text-align:left;min-height:0;padding:44px 0 36px;gap:20px;}
+.nt-about.nt-reference .nt-brand__logo{width:150px;margin-bottom:4px;}
+.nt-about.nt-reference .nt-brand__tag{font-size:14px;text-align:left;}
+.nt-about.nt-reference .nt-brand .nt-h3{font-size:32px;line-height:1.4;letter-spacing:-.03em;}
+.nt-about.nt-reference .nt-brand .nt-lead{font-size:16px;line-height:1.85;color:#47404d;}
+.nt-about.nt-reference .nt-ref-actions{display:flex;flex-wrap:wrap;gap:12px;padding-top:8px;}
+.nt-about.nt-reference .nt-ref-actions a{display:inline-flex;align-items:center;justify-content:center;border:1px solid #d8cde1;border-radius:5px;padding:12px 18px;font-size:14px;font-weight:700;color:#602b89;}
+.nt-about.nt-reference a.nt-ref-primary{display:inline-flex;align-items:center;justify-content:center;background:#602b89;border:1px solid #602b89;color:#fff;padding:12px 18px;border-radius:5px;font-size:14px;font-weight:700;}
+.nt-about.nt-reference .nt-work{padding-top:64px;}
+.nt-about.nt-reference .nt-ref-cases{display:grid;grid-template-columns:1fr;gap:12px;}
+.nt-about.nt-reference .nt-ref-cases>li{display:grid;grid-template-columns:82px minmax(0,1fr);gap:10px 18px;border:1px solid #e0d9e6;background:#f9f7fb;border-radius:6px;padding:22px;}
+.nt-about.nt-reference .nt-ref-date{font-size:13px;font-weight:700;line-height:26px;color:#602b89;}
+.nt-about.nt-reference .nt-ref-cases h3{font-size:19px;font-weight:700;line-height:1.5;}
+.nt-about.nt-reference .nt-ref-cases a{grid-column:2;font-size:13px;color:#602b89;text-decoration:underline;text-underline-offset:4px;}
+.nt-about.nt-reference .nt-ref-contact{padding:28px;background:#f3edf8;border-radius:6px;margin-bottom:32px;}
+.nt-about.nt-reference .nt-ref-contact h3{font-size:23px;font-weight:700;line-height:1.4;}
+.nt-about.nt-reference .nt-ref-contact p{font-size:14px;margin:12px 0 20px;}
+@media(max-width:560px){.nt-about.nt-reference .nt-brand .nt-h3{font-size:27px;}.nt-about.nt-reference .nt-ref-cases>li{grid-template-columns:1fr;padding:20px;gap:10px;}.nt-about.nt-reference .nt-ref-cases a{grid-column:1;}.nt-about.nt-reference .nt-ref-contact{padding:22px;}.nt-about.nt-reference .nt-ref-contact h3{font-size:21px;}}
+
+/* Photo motion restoration, 2026-09-16. Enabled only after JS initialization. */
+.nt-about.nt-photo-motion .nt-scene__stage{position:relative;width:100%;overflow:hidden;transform:none;will-change:auto;background:#fff;clip-path:none;}
+.nt-about.nt-photo-motion .nt-scene__frame{position:absolute;inset:0;height:100%;aspect-ratio:auto;margin:0;overflow:hidden;}
+.nt-about.nt-photo-motion .nt-scene__frame:first-child{z-index:2;}
+.nt-about.nt-photo-motion .nt-scene__frame:last-child{z-index:1;}
+.nt-about.nt-photo-motion .nt-scene__pic{will-change:transform;}
+.nt-about.nt-photo-motion .nt-scene__msg{will-change:transform,opacity;}
+.nt-about.nt-photo-motion .nt-gallery{overflow:hidden;}
+.nt-about.nt-photo-motion .nt-cv .nt-cv__item{will-change:transform;}
+.nt-about.nt-photo-motion .nt-cv__pic img{height:118%;max-width:100%;will-change:transform;}
