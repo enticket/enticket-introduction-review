@@ -77,7 +77,7 @@
   configure();if(document.fonts)document.fonts.ready.then(layout);
 })();
 
-/* Original 9/8 counters: run once on entry, with the original 2.4s ease-out. */
+/* Original 9/8 counters: run once on entry, with a 1.6s ease-out (1.5x speed). */
 (function () {
   var root = document.querySelector('.nt-about--embedded');
   var list = root && root.querySelector('.nt-stats ul');
@@ -104,7 +104,7 @@
     var start = null;
     function step(now) {
       if (start === null) start = now;
-      var progress = Math.min(1,(now-start)/2400);
+      var progress = Math.min(1,(now-start)/1600);
       var eased = 1-Math.pow(1-progress,4);
       els.forEach(function(el,i) { el.textContent = fmt(targets[i]*eased); });
       if (progress < 1) raf = requestAnimationFrame(step);
